@@ -20,7 +20,6 @@ pipeline {
                 echo "Commit  : ${env.GIT_COMMIT}"
             }
         }
-
         stage('Build') {
             steps {
                 sh 'mvn clean compile -B'
