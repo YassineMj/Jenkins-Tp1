@@ -149,16 +149,16 @@ pipeline {
 
         failure {
             emailext(
-                subject: "❌ FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                subject: "FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """
-Build échoué
+                        Build échoué
 
-Projet  : ${env.JOB_NAME}
-Build   : #${env.BUILD_NUMBER}
-URL     : ${env.BUILD_URL}
+                        Projet  : ${env.JOB_NAME}
+                        Build   : #${env.BUILD_NUMBER}
+                        URL     : ${env.BUILD_URL}
 
-Logs : ${env.BUILD_URL}console
-                """,
+                        Logs : ${env.BUILD_URL}console
+                                        """,
                 to: 'equipe-dev@monentreprise.fr',
                 attachLog: true
             )
