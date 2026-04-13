@@ -137,6 +137,7 @@ ${env.BUILD_URL}
                 to: 'mjyassine647@gmail.com'
             )
         }
+
         fixed {
             emailext(
                 subject: "🟢 FIXED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
