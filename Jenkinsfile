@@ -89,59 +89,61 @@ pipeline {
 
         failure {
             emailext(
-                subject: "❌ FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """
-Le build a échoué ❌
+                subject: "FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """Build FAILED
 
 Projet  : ${env.JOB_NAME}
 Build   : #${env.BUILD_NUMBER}
 Branche : ${env.GIT_BRANCH}
+Status  : ${currentBuild.currentResult}
 
-Logs :
-${env.BUILD_URL}console
+Logs: ${env.BUILD_URL}console
                 """,
                 to: 'mjyassine647@gmail.com',
-                attachLog: true
+                attachLog: true,
+                mimeType: 'text/plain'
             )
         }
 
         success {
             emailext(
-                subject: "✅ SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """
-Le build est réussi ✅
+                subject: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """Build SUCCESS
 
 Projet  : ${env.JOB_NAME}
 Build   : #${env.BUILD_NUMBER}
 Branche : ${env.GIT_BRANCH}
+Status  : ${currentBuild.currentResult}
 
-Voir :
-${env.BUILD_URL}
+URL: ${env.BUILD_URL}
                 """,
-                to: 'mjyassine647@gmail.com'
+                to: 'mjyassine647@gmail.com',
+                mimeType: 'text/plain'
             )
         }
 
         unstable {
             emailext(
-                subject: "⚠️ UNSTABLE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """
-Le build est instable ⚠️
+                subject: "UNSTABLE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """Build UNSTABLE
 
 Projet  : ${env.JOB_NAME}
 Build   : #${env.BUILD_NUMBER}
-Voir :
-${env.BUILD_URL}
+Status  : ${currentBuild.currentResult}
+
+URL: ${env.BUILD_URL}
                 """,
-                to: 'mjyassine647@gmail.com'
+                to: 'mjyassine647@gmail.com',
+                mimeType: 'text/plain'
             )
         }
 
         fixed {
             emailext(
-                subject: "🟢 FIXED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: "Le build est redevenu stable ✅ : ${env.BUILD_URL}",
-                to: 'mjyassine647@gmail.com'
+                subject: "FIXED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: "Build is now STABLE!\n\nURL: ${env.BUILD_URL}",
+                to: 'mjyassine647@gmail.com',
+                mimeType: 'text/plain'
             )
         }
     }
