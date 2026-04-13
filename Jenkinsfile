@@ -135,7 +135,7 @@ Build   : #${env.BUILD_NUMBER}
 Voir :
 ${env.BUILD_URL}
                 """,
-                to: 'equipe-dev@monentreprise.fr'
+                to: 'mjyassine647@gmail.com'
             )
         }
 
@@ -143,7 +143,7 @@ ${env.BUILD_URL}
             emailext(
                 subject: "🟢 FIXED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: "Le build est redevenu stable ✅ : ${env.BUILD_URL}",
-                to: 'equipe-dev@monentreprise.fr'
+                to: 'mjyassine647@gmail.com'
             )
         }
     }
