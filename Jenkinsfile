@@ -91,7 +91,7 @@ pipeline {
 
         failure {
             emailext(
-                subject: "❌ Build FAILED",
+                subject: "Build FAILED",
                 body: "Build Jenkins échoué: ${env.BUILD_URL}",
                 to: "equipe-dev@monentreprise.fr"
             )
