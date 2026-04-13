@@ -109,17 +109,10 @@ ${env.BUILD_URL}console
         success {
             emailext(
                 subject: "✅ SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """
-Le build est réussi ✅
-
-Projet  : ${env.JOB_NAME}
-Build   : #${env.BUILD_NUMBER}
-Branche : ${env.GIT_BRANCH}
-
-Voir :
-${env.BUILD_URL}
-                """,
-                to: 'mjyassine647@gmail.com'
+                body: "Build réussi : ${env.BUILD_URL}",
+                to: 'mjyassine647@gmail.com',
+                mimeType: 'text/plain',
+                replyTo: 'yassinmoujahid46@gmail.com'
             )
         }
 
