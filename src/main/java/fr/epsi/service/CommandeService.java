@@ -10,6 +10,7 @@ import java.util.Map;
  */
 public class CommandeService {
 
+
     /**
      * Calcule le total d'un panier.
      *
