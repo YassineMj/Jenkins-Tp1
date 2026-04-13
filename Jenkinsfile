@@ -88,7 +88,7 @@ pipeline {
         }
 
         failure {
-            emailext(
+            mail(
                 subject: "FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """Build FAILED
 
@@ -99,14 +99,12 @@ Status  : ${currentBuild.currentResult}
 
 Logs: ${env.BUILD_URL}console
                 """,
-                to: 'mjyassine647@gmail.com',
-                attachLog: true,
-                mimeType: 'text/plain'
+                to: 'mjyassine647@gmail.com'
             )
         }
 
         success {
-            emailext(
+            mail(
                 subject: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """Build SUCCESS
 
@@ -117,13 +115,12 @@ Status  : ${currentBuild.currentResult}
 
 URL: ${env.BUILD_URL}
                 """,
-                to: 'mjyassine647@gmail.com',
-                mimeType: 'text/plain'
+                to: 'mjyassine647@gmail.com'
             )
         }
 
         unstable {
-            emailext(
+            mail(
                 subject: "UNSTABLE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """Build UNSTABLE
 
@@ -133,17 +130,15 @@ Status  : ${currentBuild.currentResult}
 
 URL: ${env.BUILD_URL}
                 """,
-                to: 'mjyassine647@gmail.com',
-                mimeType: 'text/plain'
+                to: 'mjyassine647@gmail.com'
             )
         }
 
         fixed {
-            emailext(
+            mail(
                 subject: "FIXED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: "Build is now STABLE!\n\nURL: ${env.BUILD_URL}",
-                to: 'mjyassine647@gmail.com',
-                mimeType: 'text/plain'
+                to: 'mjyassine647@gmail.com'
             )
         }
     }
