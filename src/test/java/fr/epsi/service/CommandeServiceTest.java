@@ -48,7 +48,6 @@ class CommandeServiceTest {
         // THEN
         assertEquals(6.0, total, 0.001); // OK
         //assertEquals(7.0, total, 0.001); // Erreur
-
     }
 
     @Test
