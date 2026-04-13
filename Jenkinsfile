@@ -101,7 +101,7 @@ Branche : ${env.GIT_BRANCH}
 Logs :
 ${env.BUILD_URL}console
                 """,
-                to: 'equipe-dev@monentreprise.fr',
+                to: 'mjyassine647@gmail.com',
                 attachLog: true
             )
         }
@@ -119,7 +119,7 @@ Branche : ${env.GIT_BRANCH}
 Voir :
 ${env.BUILD_URL}
                 """,
-                to: 'equipe-dev@monentreprise.fr'
+                to: 'mjyassine647@gmail.com'
             )
         }
 
