@@ -131,7 +131,6 @@ Le build est instable ⚠️
 
 Projet  : ${env.JOB_NAME}
 Build   : #${env.BUILD_NUMBER}
-
 Voir :
 ${env.BUILD_URL}
                 """,
