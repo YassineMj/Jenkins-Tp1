@@ -7,7 +7,7 @@ pipeline {
         jdk 'JDK24'
     }
 
-    // 🔥 AUTO TRIGGER GITHUB PUSH
+    // AUTO TRIGGER GITHUB PUSH
     triggers {
         githubPush()
     }
