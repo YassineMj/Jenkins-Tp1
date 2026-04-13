@@ -127,6 +127,7 @@ Build   : #${env.BUILD_NUMBER}
 Voir :
 ${env.BUILD_URL}
                 """,
+
                 to: 'mjyassine647@gmail.com'
             )
         }
