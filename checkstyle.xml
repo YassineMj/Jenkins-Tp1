@@ -1,8 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
 <module name="Checker">
     <property name="severity" value="warning"/>
     <property name="fileExtensions" value="java"/>
 
-    <!-- CORRECT: LineLength OUTSIDE TreeWalker -->
     <module name="LineLength">
         <property name="max" value="120"/>
     </module>
