@@ -1,4 +1,5 @@
 pipeline {
+
     agent any
 
     tools {
@@ -10,18 +11,13 @@ pipeline {
         githubPush()
     }
 
-    environment {
-        BRANCH_NAME = "${env.GIT_BRANCH ?: 'unknown'}"
-        COMMIT_ID = "${env.GIT_COMMIT ?: 'unknown'}"
-    }
-
     stages {
 
         stage('Checkout') {
             steps {
                 checkout scm
-                echo "Branch : ${env.BRANCH_NAME}"
-                echo "Commit : ${env.COMMIT_ID}"
+                echo "Branch  : ${env.GIT_BRANCH}"
+                echo "Commit  : ${env.GIT_COMMIT}"
             }
         }
 
@@ -44,7 +40,7 @@ pipeline {
 
         stage('Tests intégration') {
             steps {
-                sh 'mvn verify -DskipUnitTests=true -B'
+                sh 'mvn verify -Dsurefire.skip=true -B'
             }
             post {
                 always {
@@ -71,10 +67,10 @@ pipeline {
         stage('Qualité') {
             steps {
                 sh '''
-                    mvn checkstyle:checkstyle -B
-                    mvn pmd:pmd -B
-                    mvn pmd:cpd -B
-                    mvn spotbugs:spotbugs -B
+                    mvn checkstyle:checkstyle \
+                        pmd:pmd \
+                        pmd:cpd \
+                        spotbugs:spotbugs -B
                 '''
             }
         }
@@ -92,32 +88,15 @@ pipeline {
             echo "Pipeline terminée — ${currentBuild.currentResult}"
         }
 
-        success {
-            emailext(
-                subject: "✅ SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """
-Build réussi ✅
-
-Projet  : ${env.JOB_NAME}
-Build   : #${env.BUILD_NUMBER}
-Branch  : ${env.BRANCH_NAME}
-
-Voir console :
-${env.BUILD_URL}console
-                """,
-                to: 'mjyassine647@gmail.com'
-            )
-        }
-
         failure {
             emailext(
                 subject: "❌ FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """
-Build échoué ❌
+Le build a échoué ❌
 
 Projet  : ${env.JOB_NAME}
 Build   : #${env.BUILD_NUMBER}
-Branch  : ${env.BRANCH_NAME}
+Branche : ${env.GIT_BRANCH}
 
 Logs :
 ${env.BUILD_URL}console
@@ -127,15 +106,31 @@ ${env.BUILD_URL}console
             )
         }
 
+        success {
+            emailext(
+                subject: "✅ SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """
+Le build est réussi ✅
+
+Projet  : ${env.JOB_NAME}
+Build   : #${env.BUILD_NUMBER}
+Branche : ${env.GIT_BRANCH}
+
+Voir :
+${env.BUILD_URL}
+                """,
+                to: 'mjyassine647@gmail.com'
+            )
+        }
+
         unstable {
             emailext(
                 subject: "⚠️ UNSTABLE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: """
-Build instable ⚠️
+Le build est instable ⚠️
 
 Projet  : ${env.JOB_NAME}
 Build   : #${env.BUILD_NUMBER}
-
 Voir :
 ${env.BUILD_URL}
                 """,
@@ -146,9 +141,10 @@ ${env.BUILD_URL}
         fixed {
             emailext(
                 subject: "🟢 FIXED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: "Build redevenu stable ✅ : ${env.BUILD_URL}",
+                body: "Le build est redevenu stable ✅ : ${env.BUILD_URL}",
                 to: 'mjyassine647@gmail.com'
             )
         }
     }
+
 }
