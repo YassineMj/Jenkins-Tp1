@@ -7,7 +7,6 @@ pipeline {
         jdk 'JDK24'
     }
 
-    // AUTO TRIGGER GITHUB PUSH
     triggers {
         githubPush()
     }
@@ -86,19 +85,66 @@ pipeline {
     post {
 
         always {
-            echo "Pipeline terminée"
+            echo "Pipeline terminée — ${currentBuild.currentResult}"
         }
 
         failure {
             emailext(
-                subject: "Build FAILED",
-                body: "Build Jenkins échoué: ${env.BUILD_URL}",
-                to: "equipe-dev@monentreprise.fr"
+                subject: "❌ FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """
+Le build a échoué ❌
+
+Projet  : ${env.JOB_NAME}
+Build   : #${env.BUILD_NUMBER}
+Branche : ${env.GIT_BRANCH}
+
+Logs :
+${env.BUILD_URL}console
+                """,
+                to: 'equipe-dev@monentreprise.fr',
+                attachLog: true
             )
         }
 
         success {
-            echo "Build SUCCESS"
+            emailext(
+                subject: "✅ SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """
+Le build est réussi ✅
+
+Projet  : ${env.JOB_NAME}
+Build   : #${env.BUILD_NUMBER}
+Branche : ${env.GIT_BRANCH}
+
+Voir :
+${env.BUILD_URL}
+                """,
+                to: 'equipe-dev@monentreprise.fr'
+            )
+        }
+
+        unstable {
+            emailext(
+                subject: "⚠️ UNSTABLE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """
+Le build est instable ⚠️
+
+Projet  : ${env.JOB_NAME}
+Build   : #${env.BUILD_NUMBER}
+
+Voir :
+${env.BUILD_URL}
+                """,
+                to: 'equipe-dev@monentreprise.fr'
+            )
+        }
+
+        fixed {
+            emailext(
+                subject: "🟢 FIXED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: "Le build est redevenu stable ✅ : ${env.BUILD_URL}",
+                to: 'equipe-dev@monentreprise.fr'
+            )
         }
     }
 }
