@@ -140,6 +140,7 @@ URL: ${env.BUILD_URL}
                 body: "Build is now STABLE!\n\nURL: ${env.BUILD_URL}",
                 to: 'mjyassine647@gmail.com'
             )
+            
         }
     }
 }
