@@ -133,14 +133,13 @@ URL: ${env.BUILD_URL}
                 to: 'mjyassine647@gmail.com'
             )
         }
-
         fixed {
             mail(
                 subject: "FIXED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: "Build is now STABLE!\n\nURL: ${env.BUILD_URL}",
                 to: 'mjyassine647@gmail.com'
             )
-            
+
         }
     }
 }
