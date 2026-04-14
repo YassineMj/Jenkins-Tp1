@@ -63,7 +63,6 @@ class CommandeServiceTest {
         // THEN
         assertEquals(16.0, total, 0.001);
     }
-
     @Test
     @DisplayName("Panier vide lève une IllegalArgumentException")
     void calculerTotal_PanierVide_LeveException() {
